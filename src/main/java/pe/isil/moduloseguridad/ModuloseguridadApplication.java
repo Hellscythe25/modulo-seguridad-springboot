@@ -22,7 +22,9 @@ public class ModuloseguridadApplication {
 		//testStatement(connection);
 		//testPreparedStatement(connection);
 		//testPreparedStatementResult(connection);
-		testCallableStatement(connection);
+		//testCallableStatement(connection);
+		loginByUsernameAndPass(connection, "474747","123456");
+		//updatePassByUsername(connection, "RastaKing", "420420");
 
 		connection.close();
 	}
@@ -69,6 +71,27 @@ public class ModuloseguridadApplication {
 			System.out.println(resultSet.getString("name")+" "+resultSet.getString("lastname"));
 		}
 
+	}
+
+	public static void loginByUsernameAndPass(Connection connection, String username, String pass) throws Exception{
+		CallableStatement callableStatement = connection.prepareCall("{call login(?,?)}");
+		callableStatement.setString(1, username);
+		callableStatement.setString(2, pass);
+		ResultSet resultSet = callableStatement.executeQuery();
+		while (resultSet.next()){
+			System.out.println(resultSet.getString(1));
+		}
+	}
+
+	public static void updatePassByUsername(Connection connection, String username, String pass) throws Exception{
+		CallableStatement callableStatement = connection.prepareCall("{call updatePasswordByUsername(?,?,?)}");
+		callableStatement.setString(1,username);
+		callableStatement.setString(2, pass);
+		callableStatement.registerOutParameter(3, Types.INTEGER);
+		callableStatement.execute();
+		int affectedRows = callableStatement.getInt(3);
+
+		System.out.println(affectedRows);
 	}
 
 }
