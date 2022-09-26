@@ -8,7 +8,7 @@ public class ModuloseguridadApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ModuloseguridadApplication.class, args);
-		System.out.print("Hola Mundo");
+		System.out.print("Initializing...");
 
 	}
 
